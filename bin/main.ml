@@ -1,62 +1,77 @@
-open Config
+open! Config
 
 (*Define super keys*)
-let defSuper = "Super"
-let shiftSuper = "Super+Shift"
+let super = "Super"
+let super_shifted = "Super+Shift"
 
 (*Config for layout manager*)
-let wideriverConfig =
-  "wideriver --layout left --layout-alt monocle --stack dwindle --count-master 1 \
-   --ratio-master 0.50 --count-wide-left 0 --ratio-wide 0.35 --smart-gaps --inner-gaps 4 \
+let wideriver_config =
+  "wideriver --layout left --layout-alt monocle --stack even --count-master 1 \
+   --ratio-master 0.6 --count-wide-left 0 --ratio-wide 0.35 --smart-gaps --inner-gaps 4 \
    --outer-gaps 4 --border-width 2 --border-width-monocle 0 --border-width-smart-gaps 0 \
-   --border-color-focused 0x93a1a1 --border-color-focused-monocle 0x586e75 \
-   --border-color-unfocused 0x586e75 --log-threshold info"
+   --border-color-focused 0x76946A --border-color-focused-monocle 0x000000 \
+   --border-color-unfocused 0x2A2A37 --log-threshold info"
 ;;
 
-let normalKeybinds =
-  [ "C", [ "close" ]
-  ; "Q", [ "spawn"; "alacritty" ]
-  ; "E", [ "spawn"; "emacs" ]
-  ; "M", [ "spawn"; "wlogout" ]
+let binds =
+  [ "Q", [ "close" ]
   ; "F", [ "toggle-fullscreen" ]
-  ; "Space", [ "toggle-float" ]
-  ; "T", [ "spawn"; "grim -g \"$(slurp)\"" ]
-  ; "B", [ "spawn"; "qutebrowser" ]
-  ; "R", [ "spawn"; "bemenu-run" ]
+  ; "D", [ "spawn"; "fuzzel" ]
   ; "J", [ "focus-view"; "next" ]
   ; "K", [ "focus-view"; "previous" ]
+  ; "Return", [ "spawn"; "foot" ]
+  ; "Space", [ "toggle-float" ]
   ]
 in
-Keybinds.mapKeys defSuper normalKeybinds;
-let shiftKeybinds =
-  [ "E", [ "exit" ]; "J", [ "swap"; "next" ]; "K", [ "swap"; "previous" ] ]
+Keybinds.mapKeys super binds;
+let binds_shifted =
+  [ "E", [ "exit" ]
+  ; "J", [ "swap"; "next" ]
+  ; "K", [ "swap"; "previous" ]
+  ; ( "P"
+    , [ "spawn"
+      ; "grim -g \"$(slurp)\" ~/Pictures/screenshots/$(date \
+         +\"%Y-%m-%d_%Hh%Mm%Ss_grim.png\")"
+      ] )
+  ; ( "U"
+    , [ "spawn"; "swaylock -F -f -c 000000 -i ~/Pictures/walls/ultra-wide/BLACK_II.jpg" ]
+    )
+  ]
 in
-Keybinds.mapKeys shiftSuper shiftKeybinds;
+Keybinds.mapKeys super_shifted binds_shifted;
 let mouseKeybinds = [ "BTN_LEFT", [ "move-view" ]; "BTN_RIGHT", [ "resize-view" ] ] in
-Keybinds.mouseMap defSuper mouseKeybinds;
+Keybinds.mouseMap super mouseKeybinds;
 (*Sets tag switching with Super and Super+Shift keys*)
-Keybinds.setTags defSuper shiftSuper;
-Keybinds.repeatRate (50, 300);
-Decorations.borderColor ("0x002b36", "0x93a1a1");
+Keybinds.setTags super super_shifted;
+Keybinds.repeatRate (75, 300);
+Decorations.borderColor ("0x76946A", "0x2A2A37");
 (*Wrapper for riverctl default-layout*)
 Decorations.layoutConfig "wideriver";
 (*Hacky way to launch apps on startup*)
 let autostart =
   [ "pipewire"
-  ; "sleep 2"
-  ; "i3bar-river"
-  ; "swww-daemon"
-  ; "swww img ~/Downloads/kanagawa-inverted-darker.jpg"
-  ; "wlsunset -t 3000 -l 56 -L 27"
-  ; wideriverConfig
+  ; "mako"
+  ; "/usr/lib/xdg-desktop-portal-wlr -r"
+  ; "/usr/lib/xdg-desktop-portal -r"
+  ; "gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\""
+  ; "gsettings set org.gnome.desktop.interface icon-theme \"Papirus\""
+  ; "gsettings set org.gnome.desktop.interface cursor-theme \"Nerissa-Ravencroft\""
+  ; "gsettings set org.gnome.desktop.interface cursor-size \"24\""
+  ; "gsettings set org.gnome.desktop.interface font-name \"Berkeley Mono\""
+  ; "wlr-randr --output DP-1 --mode 3440x1440@164.899994Hz"
+  ; "swaybg -i ~/Pictures/walls/ultra-wide/hint-of-pink.png -m fill"
+  ; "waybar -c ~/.config/waybar-river/config -s ~/.config/waybar-river/style.css"
+  ; "notify-send -t 8000 -i \"$(find $HOME/.mako-art -type f | shuf -n 1)\" \"Welcome \
+     $USER!\" &> /dev/null &"
+  ; wideriver_config
   ]
 in
 List.iter (fun x -> Util.apply @@ [ "riverctl"; "spawn" ] @ [ x ]) autostart;
 (*If you want to apply something with riverctl, use Util.apply*)
-Util.apply
-  [ "riverctl"; "keyboard-layout"; "-options"; "ctrl:nocaps,grp:toggle"; "us,ru" ];
+(* Util.apply [ "riverctl"; "keyboard-layout"; "-options"; "ctrl:nocaps,grp:toggle"; "us" ]; *)
+
 (*Scratchpad on tag #5 with tag-mask*)
-Util.apply [ "riverctl"; "map"; "normal"; "Super"; "S"; "toggle-focused-tags"; "16" ];
-Util.apply [ "riverctl"; "map"; "normal"; "Super+Shift"; "S"; "set-view-tags"; "16" ];
+Util.apply [ "riverctl"; "map"; "normal"; "Super"; "I"; "toggle-focused-tags"; "16" ];
+Util.apply [ "riverctl"; "map"; "normal"; "Super+Shift"; "I"; "set-view-tags"; "16" ];
 Util.apply [ "riverctl"; "spawn-tagmask"; "16" ];
 Util.apply [ "riverctl"; "focus-follows-cursor"; "always" ]

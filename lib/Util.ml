@@ -8,8 +8,11 @@ let prettyPrint command =
   print_endline @@ List.fold_left (fun x y -> x ^ " " ^ y) "" command
 ;;
 
+(* Use local install of riverctl *)
+let riverctl = String.concat (Unix.getenv "HOME") [ ""; "/.local/bin/riverctl" ]
+
 (** Launches riverctl with command arguments *)
-let apply command = ignore @@ spawn ~prog:"/usr/bin/riverctl" ~argv:command ()
+let apply command = ignore @@ spawn ~prog:riverctl ~argv:command ()
 
 (** Used to create tag function like "riverctl map normal Super 1 set-view-tags 1" *)
 let makeTuples tags tagFun =

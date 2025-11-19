@@ -1,2 +1,0 @@
-#!/bin/bash
-dune install --bindir=$HOME/.config/river/

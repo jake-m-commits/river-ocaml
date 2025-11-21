@@ -6,11 +6,11 @@ let super_shifted = "Super+Shift"
 
 (* Config for layout manager *)
 let wideriver_config =
-  "wideriver --layout left --layout-alt monocle --stack even --count-master 1 \
-   --ratio-master 0.6 --count-wide-left 0 --ratio-wide 0.35 --smart-gaps --inner-gaps 4 \
-   --outer-gaps 4 --border-width 2 --border-width-monocle 0 --border-width-smart-gaps 0 \
-   --border-color-focused 0x76946A --border-color-focused-monocle 0x000000 \
-   --border-color-unfocused 0x2A2A37 --log-threshold info"
+  "wideriver --layout right --layout-alt monocle --stack even --count-master 1 \
+   --ratio-master 0.6 --count-wide-left 0 --ratio-wide 0.35 --smart-gaps --inner-gaps 5 \
+   --outer-gaps 5 --border-width 2 --border-width-monocle 2 --border-width-smart-gaps 2 \
+   --border-color-focused 0x76946A --border-color-focused-monocle 0x76946A \
+   --border-color-unfocused 0x000000 --log-threshold info"
 ;;
 
 Rules.ssd_rule "*";
@@ -42,13 +42,13 @@ in
 Keybinds.map_keys super_shifted binds_shifted;
 let mouseKeybinds = [ "BTN_LEFT", [ "move-view" ]; "BTN_RIGHT", [ "resize-view" ] ] in
 Keybinds.map_mouse super mouseKeybinds;
-(*Sets tag switching with Super and Super+Shift keys*)
+(* Sets tag switching with Super and Super+Shift keys *)
 Keybinds.set_tags super super_shifted;
 Keybinds.repeat_rate (75, 300);
-Decorations.border_colour ("0x76946A", "0x2A2A37");
-(*Wrapper for riverctl default-layout*)
+Decorations.border_colour ("0x76946A", "0x000000");
+(* Wrapper for riverctl default-layout *)
 Decorations.layout_config "wideriver";
-(*Hacky way to launch apps on startup*)
+(* Hacky way to launch apps on startup *)
 let autostart =
   [ "pipewire"
   ; "mako"
@@ -68,11 +68,17 @@ let autostart =
   ]
 in
 List.iter (fun x -> Util.apply @@ [ "riverctl"; "spawn" ] @ [ x ]) autostart;
-(*If you want to apply something with riverctl, use Util.apply*)
+(* If you want to apply something with riverctl, use Util.apply *)
 (* Util.apply [ "riverctl"; "keyboard-layout"; "-options"; "ctrl:nocaps,grp:toggle"; "us" ]; *)
 
-(*Scratchpad on tag #5 with tag-mask*)
-Util.apply [ "riverctl"; "map"; "normal"; "Super"; "I"; "toggle-focused-tags"; "16" ];
-Util.apply [ "riverctl"; "map"; "normal"; "Super+Shift"; "I"; "set-view-tags"; "16" ];
-Util.apply [ "riverctl"; "spawn-tagmask"; "16" ];
-Util.apply [ "riverctl"; "focus-follows-cursor"; "always" ]
+(* Scratchpad *)
+Util.apply
+  [ "riverctl"; "map"; "normal"; "Super"; "I"; "toggle-focused-tags"; Util.lbs 20 ];
+Util.apply
+  [ "riverctl"; "map"; "normal"; "Super+Shift"; "I"; "set-view-tags"; Util.lbs 20 ];
+Util.apply
+  [ "riverctl"; "spawn-tagmask"; ((1 lsl 32) - 1) lxor (1 lsl 20) |> Int.to_string ];
+(* Other *)
+Util.apply [ "riverctl"; "focus-follows-cursor"; "always" ];
+Util.apply [ "riverctl"; "xcursor-theme"; "Nerissa-Ravencroft"; "24" ];
+Util.apply [ "riverctl"; "set-cursor-warp"; "on-focus-change" ]

@@ -14,9 +14,9 @@ let apply command = ignore @@ spawn ~prog:riverctl ~argv:command ()
 
 (** Used to create tag function like "riverctl map normal Super 1 set-view-tags 1" *)
 let make_tuples tags tag_f =
-  let tag = List.map (fun x -> Int.of_float x |> Int.to_string) tags in
+  let tag = List.map (fun x -> Int.to_string x) tags in
   List.map2 (fun x y -> x, y) tag tag_f
 ;;
 
-(** River uses powers of 2 to select tags, so we need to get them from tags list *)
-let pow x = Int.of_float (2. ** x) |> Int.to_string
+(** Left bitwise shift to use tag *)
+let lbs x = 1 lsl x |> Int.to_string

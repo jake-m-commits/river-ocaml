@@ -1,10 +1,10 @@
 open! Config
 
-(*Define super keys*)
+(* Define super keys *)
 let super = "Super"
 let super_shifted = "Super+Shift"
 
-(*Config for layout manager*)
+(* Config for layout manager *)
 let wideriver_config =
   "wideriver --layout left --layout-alt monocle --stack even --count-master 1 \
    --ratio-master 0.6 --count-wide-left 0 --ratio-wide 0.35 --smart-gaps --inner-gaps 4 \
@@ -13,6 +13,7 @@ let wideriver_config =
    --border-color-unfocused 0x2A2A37 --log-threshold info"
 ;;
 
+Rules.ssd_rule "*";
 let binds =
   [ "Q", [ "close" ]
   ; "F", [ "toggle-fullscreen" ]

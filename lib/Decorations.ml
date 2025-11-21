@@ -1,11 +1,11 @@
-let borderColor tuple =
-  let colorFocused = [ "riverctl"; "border-color-focused"; fst tuple ] in
-  Util.apply colorFocused;
-  let colorUnfocused = [ "riverctl"; "border-color-unfocused"; snd tuple ] in
-  Util.apply colorUnfocused
+let border_colour tuple =
+  let focused = [ "riverctl"; "border-color-focused"; fst tuple ] in
+  Util.apply focused;
+  let unfocused = [ "riverctl"; "border-color-unfocused"; snd tuple ] in
+  Util.apply unfocused
 ;;
 
-let layoutConfig name =
+let layout_config name =
   let manager = [ "riverctl"; "default-layout"; name ] in
   Util.apply manager
 ;;

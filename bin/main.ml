@@ -23,7 +23,7 @@ let binds =
   ; "Space", [ "toggle-float" ]
   ]
 in
-Keybinds.mapKeys super binds;
+Keybinds.map_keys super binds;
 let binds_shifted =
   [ "E", [ "exit" ]
   ; "J", [ "swap"; "next" ]
@@ -38,15 +38,15 @@ let binds_shifted =
     )
   ]
 in
-Keybinds.mapKeys super_shifted binds_shifted;
+Keybinds.map_keys super_shifted binds_shifted;
 let mouseKeybinds = [ "BTN_LEFT", [ "move-view" ]; "BTN_RIGHT", [ "resize-view" ] ] in
-Keybinds.mouseMap super mouseKeybinds;
+Keybinds.map_mouse super mouseKeybinds;
 (*Sets tag switching with Super and Super+Shift keys*)
-Keybinds.setTags super super_shifted;
-Keybinds.repeatRate (75, 300);
-Decorations.borderColor ("0x76946A", "0x2A2A37");
+Keybinds.set_tags super super_shifted;
+Keybinds.repeat_rate (75, 300);
+Decorations.border_colour ("0x76946A", "0x2A2A37");
 (*Wrapper for riverctl default-layout*)
-Decorations.layoutConfig "wideriver";
+Decorations.layout_config "wideriver";
 (*Hacky way to launch apps on startup*)
 let autostart =
   [ "pipewire"

@@ -13,7 +13,7 @@ let tag_swap tags = List.map (fun x -> [ "set-view-tags"; Util.pow (x -. 1.) ]) 
 (** Takes key for switching and key for swapping;;
  if you want more than 4 tags add floating points to tags list *)
 let set_tags switch_key swap_key =
-  let tags = [ 1.; 2.; 3.; 4. ] in
+  let tags = [ 1.; 2.; 3.; 4.; 5.; 6.; 7.; 8.; 9. ] in
   def_map map_normal switch_key (Util.make_tuples tags @@ tag_switch tags);
   def_map map_normal swap_key (Util.make_tuples tags @@ tag_swap tags)
 ;;

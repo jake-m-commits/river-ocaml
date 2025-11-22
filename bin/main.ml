@@ -13,14 +13,23 @@ let wideriver_config =
    --border-color-unfocused 0x000000 --log-threshold info"
 ;;
 
+(* Use ssd for all app-ids *)
 Rules.ssd_rule "*";
+(* Assign specific app to specific tag *)
+Rules.tag_rule ("firefox", 1);
+Rules.tag_rule ("com.github.wwmm.easyeffects", 3);
+Rules.tag_rule ("org.qbittorrent.qBittorrent", 7);
+Rules.tag_rule ("steam", 8);
+(* Assign floating rules *)
+Rules.float_rule "vpn-stat";
+Rules.float_rule "floating-foot";
 let binds =
   [ "Q", [ "close" ]
   ; "F", [ "toggle-fullscreen" ]
   ; "D", [ "spawn"; "fuzzel" ]
   ; "J", [ "focus-view"; "next" ]
   ; "K", [ "focus-view"; "previous" ]
-  ; "Return", [ "spawn"; "foot" ]
+  ; "Return", [ "spawn"; "ghostty" ]
   ; "Space", [ "toggle-float" ]
   ]
 in
@@ -65,6 +74,10 @@ let autostart =
   ; "notify-send -t 8000 -i \"$(find $HOME/.mako-art -type f | shuf -n 1)\" \"Welcome \
      $USER!\" &> /dev/null &"
   ; wideriver_config
+  ; "firefox"
+  ; "easyeffects"
+  ; "qbittorrent"
+  ; "steam"
   ]
 in
 List.iter (fun x -> Util.apply @@ [ "riverctl"; "spawn" ] @ [ x ]) autostart;

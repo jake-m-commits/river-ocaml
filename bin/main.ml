@@ -13,16 +13,24 @@ let wideriver_config =
    --border-color-unfocused 0x000000 --log-threshold info"
 ;;
 
-(* Use ssd for all app-ids *)
+(* Configure input devices *)
+let ploopy_touchpad =
+  "pointer-65261-0-Ploopy_Corporation_Ploopy_Pavonis_Trackpad_Touchpad"
+in
+Input.enable_tap ploopy_touchpad;
+Input.enable_drag_lock ploopy_touchpad;
+Input.enable_natural_scroll ploopy_touchpad;
+Input.enable_two_finger_scroll ploopy_touchpad;
+Keybinds.repeat_rate (75, 300);
+(* Apply rules *)
 Rules.ssd_rule "*";
-(* Assign specific app to specific tag *)
 Rules.tag_rule ("firefox", 1);
 Rules.tag_rule ("com.github.wwmm.easyeffects", 3);
 Rules.tag_rule ("org.qbittorrent.qBittorrent", 7);
 Rules.tag_rule ("steam", 8);
-(* Assign floating rules *)
 Rules.float_rule "vpn-stat";
 Rules.float_rule "floating-foot";
+(* Apply keybinds *)
 let binds =
   [ "Q", [ "close" ]
   ; "F", [ "toggle-fullscreen" ]
@@ -51,13 +59,11 @@ in
 Keybinds.map_keys super_shifted binds_shifted;
 let mouseKeybinds = [ "BTN_LEFT", [ "move-view" ]; "BTN_RIGHT", [ "resize-view" ] ] in
 Keybinds.map_mouse super mouseKeybinds;
-(* Sets tag switching with Super and Super+Shift keys *)
 Keybinds.set_tags super super_shifted;
-Keybinds.repeat_rate (75, 300);
+(* Apply decorations *)
 Decorations.border_colour ("0x76946A", "0x000000");
-(* Wrapper for riverctl default-layout *)
 Decorations.layout_config "wideriver";
-(* Hacky way to launch apps on startup *)
+(* Auto-start *)
 let autostart =
   [ "pipewire"
   ; "mako"
@@ -69,7 +75,7 @@ let autostart =
   ; "gsettings set org.gnome.desktop.interface cursor-size \"24\""
   ; "gsettings set org.gnome.desktop.interface font-name \"Berkeley Mono\""
   ; "wlr-randr --output DP-1 --mode 3440x1440@164.899994Hz"
-  ; "swaybg -i ~/Pictures/mori-calliope/November_2025.png -m fit -c 000000"
+  ; "swaybg -i ~/Pictures/walls/ultra-wide/hint-of-pink.png -m fit -c 000000"
   ; "waybar -c ~/.config/waybar-river/config -s ~/.config/waybar-river/style.css"
   ; "notify-send -t 8000 -i \"$(find $HOME/.mako-art -type f | shuf -n 1)\" \"Welcome \
      $USER!\" &> /dev/null &"

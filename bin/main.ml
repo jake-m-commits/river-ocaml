@@ -69,7 +69,7 @@ let autostart =
   ; "gsettings set org.gnome.desktop.interface cursor-size \"24\""
   ; "gsettings set org.gnome.desktop.interface font-name \"Berkeley Mono\""
   ; "wlr-randr --output DP-1 --mode 3440x1440@164.899994Hz"
-  ; "swaybg -i ~/Pictures/walls/ultra-wide/hint-of-pink.png -m fill"
+  ; "swaybg -i ~/Pictures/mori-calliope/November_2025.png -m fit -c 000000"
   ; "waybar -c ~/.config/waybar-river/config -s ~/.config/waybar-river/style.css"
   ; "notify-send -t 8000 -i \"$(find $HOME/.mako-art -type f | shuf -n 1)\" \"Welcome \
      $USER!\" &> /dev/null &"
@@ -85,8 +85,7 @@ List.iter (fun x -> Util.apply @@ [ "riverctl"; "spawn" ] @ [ x ]) autostart;
 (* Util.apply [ "riverctl"; "keyboard-layout"; "-options"; "ctrl:nocaps,grp:toggle"; "us" ]; *)
 
 (* Scratchpad *)
-Util.apply
-  [ "riverctl"; "map"; "normal"; "Super"; "I"; "toggle-focused-tags"; Util.lbs 20 ];
+Util.apply [ "riverctl"; "map"; "normal"; "Super"; "I"; "spawn"; "river-toggle-scratch" ];
 Util.apply
   [ "riverctl"; "map"; "normal"; "Super+Shift"; "I"; "set-view-tags"; Util.lbs 20 ];
 Util.apply

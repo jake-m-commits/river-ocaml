@@ -7,9 +7,9 @@ let super_shifted = "Super+Shift"
 (* Config for layout manager *)
 let wideriver_config =
   "wideriver --layout right --layout-alt monocle --stack even --count-master 1 \
-   --ratio-master 0.6 --count-wide-left 0 --ratio-wide 0.35 --smart-gaps --inner-gaps 5 \
-   --outer-gaps 5 --border-width 2 --border-width-monocle 2 --border-width-smart-gaps 2 \
-   --border-color-focused 0x76946A --border-color-focused-monocle 0x76946A \
+   --ratio-master 0.6 --count-wide-left 0 --ratio-wide 0.35 --no-smart-gaps --inner-gaps \
+   0 --outer-gaps 0 --border-width 2 --border-width-monocle 2 --border-width-smart-gaps \
+   2 --border-color-focused 0x76946A --border-color-focused-monocle 0x76946A \
    --border-color-unfocused 0x000000 --log-threshold info"
 ;;
 

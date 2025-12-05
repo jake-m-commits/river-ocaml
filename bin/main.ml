@@ -25,7 +25,7 @@ Keybinds.repeat_rate (75, 300);
 (* Apply rules *)
 Rules.ssd_rule "*";
 Rules.tag_rule ("firefox", 1);
-Rules.tag_rule ("com.github.wwmm.easyeffects", 3);
+Rules.tag_rule ("JDS Labs Core", 3);
 Rules.tag_rule ("org.qbittorrent.qBittorrent", 7);
 Rules.tag_rule ("steam", 8);
 Rules.float_rule "vpn-stat";
@@ -46,6 +46,7 @@ let binds_shifted =
   [ "E", [ "exit" ]
   ; "J", [ "swap"; "next" ]
   ; "K", [ "swap"; "previous" ]
+  ; "Return", [ "spawn"; "foot" ]
   ; ( "P"
     , [ "spawn"
       ; "grim -g \"$(slurp)\" ~/Pictures/screenshots/$(date \
@@ -75,13 +76,13 @@ let autostart =
   ; "gsettings set org.gnome.desktop.interface cursor-size \"24\""
   ; "gsettings set org.gnome.desktop.interface font-name \"Berkeley Mono\""
   ; "wlr-randr --output DP-1 --mode 3440x1440@164.899994Hz"
-  ; "swaybg -i ~/Pictures/walls/ultra-wide/hint-of-pink.png -m fit -c 000000"
+  ; "swaybg -i ~/Pictures/walls/ultra-wide/hint-of-pink.png -m fill -c 000000"
   ; "waybar -c ~/.config/waybar-river/config -s ~/.config/waybar-river/style.css"
   ; "notify-send -t 8000 -i \"$(find $HOME/.mako-art -type f | shuf -n 1)\" \"Welcome \
      $USER!\" &> /dev/null &"
   ; wideriver_config
   ; "firefox"
-  ; "easyeffects"
+  ; "JDS_Labs_Core-1.0.17.AppImage"
   ; "qbittorrent"
   ; "steam"
   ]

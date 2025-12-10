@@ -9,7 +9,7 @@ let wideriver_config =
   "wideriver --layout right --layout-alt monocle --stack even --count-master 1 \
    --ratio-master 0.6 --count-wide-left 0 --ratio-wide 0.35 --no-smart-gaps --inner-gaps \
    0 --outer-gaps 0 --border-width 2 --border-width-monocle 2 --border-width-smart-gaps \
-   2 --border-color-focused 0x76946A --border-color-focused-monocle 0x76946A \
+   2 --border-color-focused 0xb36d43 --border-color-focused-monocle 0xb36d43 \
    --border-color-unfocused 0x000000 --log-threshold info"
 ;;
 
@@ -17,15 +17,19 @@ let wideriver_config =
 let ploopy_touchpad =
   "pointer-65261-0-Ploopy_Corporation_Ploopy_Pavonis_Trackpad_Touchpad"
 in
+let zsa_navigator = "pointer-12951-6519-ZSA_Technology_Labs_Voyager" in
 Input.enable_tap ploopy_touchpad;
 Input.enable_drag_lock ploopy_touchpad;
 Input.enable_natural_scroll ploopy_touchpad;
 Input.enable_two_finger_scroll ploopy_touchpad;
+Input.accel_profile ~device:zsa_navigator ~profile:"flat";
+Input.pointer_accel ~device:zsa_navigator ~factor:0.25;
 Keybinds.repeat_rate (75, 300);
 (* Apply rules *)
 Rules.ssd_rule "*";
 Rules.tag_rule ("firefox", 1);
 Rules.tag_rule ("JDS Labs Core", 3);
+Rules.tag_rule ("foot-wiremix", 3);
 Rules.tag_rule ("org.qbittorrent.qBittorrent", 7);
 Rules.tag_rule ("steam", 8);
 Rules.float_rule "vpn-stat";
@@ -62,7 +66,7 @@ let mouseKeybinds = [ "BTN_LEFT", [ "move-view" ]; "BTN_RIGHT", [ "resize-view" 
 Keybinds.map_mouse super mouseKeybinds;
 Keybinds.set_tags super super_shifted;
 (* Apply decorations *)
-Decorations.border_colour ("0x76946A", "0x000000");
+Decorations.border_colour ("0xb36d43", "0x000000");
 Decorations.layout_config "wideriver";
 (* Auto-start *)
 let autostart =
@@ -82,7 +86,7 @@ let autostart =
      $USER!\" &> /dev/null &"
   ; wideriver_config
   ; "firefox"
-  ; "JDS_Labs_Core-1.0.17.AppImage"
+  ; "foot-wiremix"
   ; "qbittorrent"
   ; "steam"
   ]

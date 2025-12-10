@@ -23,3 +23,24 @@ let enable_two_finger_scroll device =
   let command = input_add @ [ device; "scroll-method"; "two-finger" ] in
   Util.apply command
 ;;
+
+(** Set accel profile for input device (none || flat || adaptive) *)
+let accel_profile ~device ~profile =
+  if
+    String.equal profile "none"
+    || String.equal profile "flat"
+    || String.equal profile "adaptive"
+  then (
+    let command = input_add @ [ device; "accel-profile"; profile ] in
+    Util.apply command)
+  else failwith "Unknown input profile. Use none || flat || adaptive."
+;;
+
+(** Set pointer accel for input device (1. > factor > -1.) *)
+let pointer_accel ~device ~factor =
+  if factor > Float.neg 1. || factor < 1.
+  then (
+    let command = input_add @ [ device; "pointer-accel"; string_of_float factor ] in
+    Util.apply command)
+  else failwith "Invalid factor. Use a accel factor between -1 and 1."
+;;
